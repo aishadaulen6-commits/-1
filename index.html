@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Абайдың «Он жетінші қарасөзі» — интерактивті жұмыс парағы</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#e8f4ff,#f8f0ff);
+  color:#222;
+}
+.container{max-width:1050px;margin:0 auto;padding:25px}
+.header{
+  background:white;border-radius:22px;padding:25px;
+  box-shadow:0 8px 25px rgba(0,0,0,.10);margin-bottom:20px;text-align:center
+}
+h1{margin:0 0 8px;color:#4b3f72;font-size:30px}
+.subtitle{color:#666}
+.info{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.info input{flex:1;min-width:220px;padding:12px;border:2px solid #ddd;border-radius:10px;font-size:16px}
+.score{
+  position:sticky;top:10px;z-index:5;background:#4b3f72;color:white;
+  border-radius:14px;padding:13px 18px;margin-bottom:18px;text-align:center;font-weight:bold;
+  box-shadow:0 5px 15px rgba(0,0,0,.15)
+}
+.card{
+  background:white;border-radius:18px;padding:22px;margin:16px 0;
+  box-shadow:0 5px 18px rgba(0,0,0,.08)
+}
+.qtitle{font-weight:bold;font-size:18px;line-height:1.45;margin-bottom:14px}
+.option{
+  display:block;padding:13px 15px;margin:9px 0;border:2px solid #e2e2e2;
+  border-radius:12px;cursor:pointer;transition:.2s;background:#fff
+}
+.option:hover{border-color:#8c7bc4;background:#faf8ff}
+.option input{margin-right:9px}
+.option.correct{border-color:#22a06b;background:#e9fff5}
+.option.wrong{border-color:#e55353;background:#fff0f0}
+.feedback{margin-top:12px;padding:12px;border-radius:10px;font-weight:bold;display:none}
+.feedback.ok{display:block;background:#e9fff5;color:#147a4f}
+.feedback.no{display:block;background:#fff0f0;color:#b52f2f}
+.answer{display:none;margin-top:8px;color:#147a4f}
+.openarea{
+  width:100%;min-height:110px;border:2px solid #ddd;border-radius:12px;
+  padding:12px;font-size:16px;resize:vertical
+}
+.btn{
+  border:0;border-radius:11px;padding:11px 17px;font-size:15px;
+  cursor:pointer;background:#4b3f72;color:#fff;margin-top:10px
+}
+.btn:hover{opacity:.9}
+.model{
+  display:none;background:#f2efff;border-left:5px solid #4b3f72;
+  padding:14px;margin-top:12px;border-radius:8px;line-height:1.5
+}
+.reset{background:#e55353}
+.result{font-size:18px;margin-top:10px}
+.footer{text-align:center;color:#666;padding:20px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>📚 Абайдың «Он жетінші қарасөзі»</h1>
+    <div class="subtitle">Мазмұнды пысықтау — интерактивті жұмыс парағы</div>
+    <div class="info">
+      <input id="studentName" placeholder="Оқушының аты-жөні">
+      <input id="date" type="date">
+    </div>
+  </div>
+
+  <div class="score" id="score">⭐ Нәтиже: 0 / 7</div>
+
+  <div id="quiz"></div>
+
+  <div class="card">
+    <div class="qtitle">8. Жүректің «Жұмсақ төсекте, жылы үйде тамағы тоқ жатқан кісіге...» деп басталатын сөзі арқылы оның қандай адамгершілік қасиеттері ашылады? Мәтінге сүйеніп түсіндіріңіз.</div>
+    <textarea class="openarea" placeholder="Өз жауабыңызды жазыңыз..."></textarea>
+    <button class="btn" onclick="toggleModel('m8')">💡 Үлгі жауапты көрсету</button>
+    <div class="model" id="m8">Жүректің сөзі оның мейірімділік, рақымдылық, жанашырлық, әділеттілік сияқты адамгершілік қасиеттерін танытады. Ол өзінен жағдайы төмен, мұқтаж адамдарды ұмытпай, оларға қамқор болуды көздейді.</div>
+  </div>
+
+  <div class="card">
+    <div class="qtitle">9. Ғылымның Ақыл мен Қайратқа берген сынына сүйене отырып, бұл екі қуаттың Жүрексіз қандай қаупі болуы мүмкін екенін талдап жазыңыз.</div>
+    <textarea class="openarea" placeholder="Өз жауабыңызды жазыңыз..."></textarea>
+    <button class="btn" onclick="toggleModel('m9')">💡 Үлгі жауапты көрсету</button>
+    <div class="model" id="m9">Ақыл жүрексіз болса, пайда мен залалды есептей отырып, айла мен амалға да қызмет етуі мүмкін. Қайрат жүрексіз болса, кейде жақсылыққа, кейде жамандыққа бірдей берілуі ықтимал. Сондықтан екі қуаттың адамгершілік бағытта қолданылуы үшін Жүрекке бағынуы маңызды.</div>
+  </div>
+
+  <div class="card">
+    <div class="qtitle">10. Абайдың «Толық адам» концепциясы (үш қуаттың бірлігі) қазіргі заман адамы үшін қаншалықты маңызды? Өз ойыңызды қорытындылаңыз.</div>
+    <textarea class="openarea" placeholder="Өз жауабыңызды жазыңыз..."></textarea>
+    <button class="btn" onclick="toggleModel('m10')">💡 Үлгі жауапты көрсету</button>
+    <div class="model" id="m10">«Толық адам» ұғымы қазіргі адам үшін де маңызды. Ақыл — дұрыс шешім қабылдауға, Қайрат — мақсатқа жетуге әрекет етуге, ал Жүрек — адамгершілік пен мейірімділікті сақтауға бағыт береді. Осы үшеуінің үйлесуі тұлғаның саналы әрі жауапты болуына ықпал етеді.</div>
+  </div>
+
+  <div class="card" style="text-align:center">
+    <button class="btn reset" onclick="resetQuiz()">🔄 Тапсырмаларды қайта бастау</button>
+    <div class="result" id="finalResult"></div>
+  </div>
+
+  <div class="footer">© Интерактивті жұмыс парағы | Абайдың «Он жетінші қарасөзі»</div>
+</div>
+
+<script>
+const questions = [
+{
+ q:"1. Қайраттың айтуынша, адам бойын күнәкәрліктен, көрсеқызар жеңілдіктен және нәпсінің азғыруынан құтқаратын кім?",
+ opts:["A) Жүрек","B) Ақыл","C) Ғылым","D) Қайрат"], ans:3
+},
+{
+ q:"2. Ақыл өзінің артықшылығын қалай дәлелдейді?",
+ opts:["A) Жаманшылықтан жиреніп тулайтындығымен","B) Қанның тарайтын орталығы болғандығымен","C) Пайда мен залалды айыра алатындығымен","D) Еңбексіз мал табуға көмектесетіндігімен"], ans:2
+},
+{
+ q:"3. Жүрек өзін неліктен «адам денесінің патшасымын» деп атайды?",
+ opts:["A) Қан мен жанның мекені болғандықтан","B) Ғылымды бірінші болып үйренгендіктен","C) Дүниедегі барлық амалды білетіндіктен","D) Ақыл мен Қайратты бағындырып тұрғандықтан"], ans:0
+},
+{
+ q:"4. Ғылым Қайраттың қандай «жаман» қасиетін атап өтеді?",
+ opts:["A) Кейде жақсылықты, кейде жамандықты берік ұстап кететіндігін","B) Жүрекке бағынбайтындығын","C) Ғылымды үйренуге ерінетіндігін","D) Ақылдың сөзін ұқпайтындығын"], ans:0
+},
+{
+ q:"5. Ғылымның пікірінше, Ақылдың басты кемшілігі неде?",
+ opts:["A) Жүректің қырына жүрмейтіндігінде","B) Амал мен айланың да Ақылдан шығатындығында","C) Тәңіріні тани алмайтындығында","D) Пайда мен залалды білмейтіндігінде"], ans:1
+},
+{
+ q:"6. Ғылым неліктен Жүректі «әмірші» етіп тағайындады?",
+ opts:["A) Ғылымның ең жақын досы болғандықтан","B) Ақыл мен Қайраттан күшті болғандықтан","C) Амал мен айланы жақсы білетіндіктен","D) Жаманшылыққа ермей, одан жиренетін қасиеті үшін"], ans:3
+},
+{
+ q:"7. Ғылымның айтуынша, «қасиетті адам» деп кімді атауға болады?",
+ opts:["A) Тек Ақылы өте жоғары адамды","B) Ғылымды ғана серік еткен адамды","C) Үш қуатты бірдей ұстап, бәрін Жүрекке билеткен адамды","D) Тек Қайратымен дүниені билеген адамды"], ans:2
+}
+];
+
+let score=0;
+let answered=Array(questions.length).fill(false);
+
+function render(){
+ const quiz=document.getElementById('quiz');
+ quiz.innerHTML='';
+ questions.forEach((item,i)=>{
+   const card=document.createElement('div');
+   card.className='card';
+   let options='';
+   item.opts.forEach((op,j)=>{
+     options+=`<label class="option" id="q${i}o${j}">
+       <input type="radio" name="q${i}" onchange="check(${i},${j})"> ${op}
+     </label>`;
+   });
+   card.innerHTML=`<div class="qtitle">${item.q}</div>${options}
+   <div id="fb${i}" class="feedback"></div>
+   <div id="ans${i}" class="answer"></div>`;
+   quiz.appendChild(card);
+ });
+}
+function check(i,j){
+ if(answered[i]) return;
+ answered[i]=true;
+ const fb=document.getElementById('fb'+i);
+ const ans=document.getElementById('ans'+i);
+ if(j===questions[i].ans){
+   score++;
+   document.getElementById('q'+i+'o'+j).classList.add('correct');
+   fb.className='feedback ok';
+   fb.innerHTML='🎉 Дұрыс жауап!';
+ }else{
+   document.getElementById('q'+i+'o'+j).classList.add('wrong');
+   document.getElementById('q'+i+'o'+questions[i].ans).classList.add('correct');
+   fb.className='feedback no';
+   fb.innerHTML='❌ Қате жауап.';
+   ans.style.display='block';
+   ans.innerHTML='✅ Дұрыс жауабы: <b>'+questions[i].opts[questions[i].ans]+'</b>';
+ }
+ updateScore();
+}
+function updateScore(){
+ document.getElementById('score').innerHTML='⭐ Нәтиже: '+score+' / 7';
+ if(answered.every(Boolean)){
+   let msg = score===7 ? '🌟 Барлығы дұрыс! Жарайсың!' :
+             score>=5 ? '👏 Жақсы нәтиже!' :
+             score>=3 ? '🙂 Тағы бір рет қайталап көр!' :
+             '💪 Мәтінді қайта оқып, тапсырмаларды қайталап көр!';
+   document.getElementById('finalResult').innerHTML=msg;
+ }
+}
+function toggleModel(id){
+ const el=document.getElementById(id);
+ el.style.display=el.style.display==='block'?'none':'block';
+}
+function resetQuiz(){
+ score=0; answered=Array(questions.length).fill(false);
+ render(); updateScore();
+ document.getElementById('finalResult').innerHTML='';
+ document.querySelectorAll('.model').forEach(x=>x.style.display='none');
+}
+render();
+</script>
+</body>
+</html>
